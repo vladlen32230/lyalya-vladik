@@ -131,7 +131,6 @@
              controls loop muted playsinline preload="metadata"></video>
     </div>
     <div class="controls">
-      <button id="sound" type="button">🔊 Включить звук</button>
       <button id="replay" type="button">↻ Сначала</button>
     </div>
   </main>
@@ -157,29 +156,18 @@
     }
   })();
 
-  // autoplay muted (allowed), with a button to unmute on user gesture
+  // autoplay muted (allowed); viewers can unmute via the native controls
   (function(){
     var v = document.getElementById('v');
-    var sound = document.getElementById('sound');
     var replay = document.getElementById('replay');
 
     var p = v.play();
     if (p && p.catch) p.catch(function(){ /* autoplay blocked: poster + controls remain */ });
 
-    function label(){
-      sound.textContent = v.muted ? '🔊 Включить звук' : '🔇 Выключить звук';
-    }
-    sound.addEventListener('click', function(){
-      v.muted = !v.muted;
-      if (!v.muted) v.play().catch(function(){});
-      label();
-    });
-    v.addEventListener('volumechange', label);
     replay.addEventListener('click', function(){
       v.currentTime = 0;
       v.play().catch(function(){});
     });
-    label();
   })();
 </script>
 </body>
